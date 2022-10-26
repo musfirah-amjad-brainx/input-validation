@@ -16,6 +16,7 @@ confirmPassword.addEventListener("focusout", validateConfirmPassword)
 email.addEventListener("focusout", validateEmail)
 age.addEventListener("focusout", validateAge)
 contactNumber.addEventListener("focusout", validateContactNumber)
+btn.addEventListener("click", validateInput)
 
 // disabling submit button 
 btn.disabled = true;
@@ -29,7 +30,7 @@ function validateFirstName() {
     else {
         btn.disabled = false;
         document.getElementById("fnameerrorMsg").innerHTML = " ";
-
+        return true
     }
 }
 // function to validate last name
@@ -42,7 +43,7 @@ function validateLastName() {
     else {
         btn.disabled = false;
         document.getElementById("lnameerrorMsg").innerHTML = " ";
-
+        return true
     }
 }
 // function to validate password
@@ -57,6 +58,7 @@ function validatePassword() {
     else {
         btn.disabled = false;
         document.getElementById("passerrorMsg").innerHTML = " ";
+        return true
 
     }
 }
@@ -71,7 +73,7 @@ function validateConfirmPassword() {
     else {
         btn.disabled = false;
         document.getElementById("confirmpasserrorMsg").innerHTML = " ";
-
+        return true
     }
 }
 // function to validate emails
@@ -82,7 +84,6 @@ function validateEmail() {
 
     // splitting multiple emails 
     arrayOfEmails = _email.split(",");
-    console.log(arrayOfEmails)
     // reg exp to validate email
     const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -90,16 +91,18 @@ function validateEmail() {
         if (arrayOfEmails[e].length <= 0) {
             document.getElementById("emailerrorMsg").innerHTML = "*Field must be filled";
             btn.disabled = true;
+            break;
         }
         else if (!arrayOfEmails[e].match(emailRegEx)) {
             document.getElementById("emailerrorMsg").innerHTML = "*Invalid Email";
             btn.disabled = true;
+            break;
         }
         else {
-            document.getElementById("emailerrorMsg").innerHTML = " ";
             btn.disabled = false;
+            document.getElementById("emailerrorMsg").innerHTML = " ";
+            return true
         }
-        console.log(arrayOfEmails[e]);
     }
 }
 // function to validate age
@@ -112,7 +115,7 @@ function validateAge() {
     else {
         btn.disabled = false;
         document.getElementById("ageerrorMsg").innerHTML = " ";
-
+        return true
     }
 }
 // function to validate contact number
@@ -123,15 +126,27 @@ function validateContactNumber() {
         btn.disabled = true;
     }
     else {
-        btn.disabled = false;
-        document.getElementById("contacterrorMsg").innerHTML = " ";
 
+        document.getElementById("contacterrorMsg").innerHTML = " ";
+        btn.disabled = false;
+        return true
     }
 }
 function validateInput() {
-    if (!(firstName.value.length == 0) && !(lastName.value.length == 0) && !(age.value.length == 0) && !(password.value.length == 0) && !(confirmPassword.value.length == 0) && !(contactNumber.value.length == 0) && !(email.value.length == 0)) {
+    // if (!(firstName.value.length == 0) && !(lastName.value.length == 0) && !(age.value.length == 0) && !(password.value.length == 0) && !(confirmPassword.value.length == 0) && !(contactNumber.value.length == 0) && !(email.value.length == 0)) {
+    //     alert("successfully submitted!")
+    //     document.getElementById("myForm").reset();
+    // }
+    // else{
+    //     alert("All fields need")
+    // }
+    if (validateFirstName() && validateLastName() && validateEmail() && validateAge() && validatePassword() && validateConfirmPassword() && validateContactNumber()) {
+        btn.disabled = false;
         alert("successfully submitted!")
         document.getElementById("myForm").reset();
-    }
 
+    }
+    else {
+        btn.disabled = true;
+    }
 }
