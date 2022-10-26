@@ -84,7 +84,7 @@ function validateEmail() {
     arrayOfEmails = _email.split(",");
     console.log(arrayOfEmails)
     // reg exp to validate email
-    const emailRegEx = /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/;
+    const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     for (let e = 0; e < arrayOfEmails.length; e++) {
         if (arrayOfEmails[e].length <= 0) {
